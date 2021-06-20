@@ -12,7 +12,7 @@ import Image from 'next/image'
 import MenuIcon from '@material-ui/icons/Menu';
 import styles from '../styles/Custom.module.css'
 import SidebarSmall from './SidebarSmall'
-import ScrollToBottom from 'react-scroll-to-bottom';
+import ScrollableFeed from 'react-scrollable-feed'
 
 function ChatWindow({ chat, messages, toUser, setToggle, toggle, matches }) {
     
@@ -21,6 +21,8 @@ function ChatWindow({ chat, messages, toUser, setToggle, toggle, matches }) {
     const router = useRouter()
     const [messagesSnapshot] = useCollection(db.collection('chat').doc(router.query.id).collection('messages').orderBy("timestamp", "asc"))
     
+    
+    const toBottom = React.useRef();
     
     
     const userRef = db.collection('users').where('email', '==', toUser);
@@ -43,6 +45,7 @@ function ChatWindow({ chat, messages, toUser, setToggle, toggle, matches }) {
         })
 
         setText("")
+       
     }
     
     const getMessage = () => {
@@ -62,7 +65,11 @@ function ChatWindow({ chat, messages, toUser, setToggle, toggle, matches }) {
                     timestamp: message.data().timestamp?.toDate().getTime(),
                     }}
      />
+
+     
             })
+
+            
             }
             else{
             
@@ -122,11 +129,17 @@ function ChatWindow({ chat, messages, toUser, setToggle, toggle, matches }) {
                     
                 </div>
             </header>
-            <ScrollToBottom  className= {`w-full h-full bg-blue-200 md:px-2 pt-4  flex flex-col overflow-y-auto ${styles.bg_img}`}>
+            <ScrollableFeed  className= {`  h-full bg-blue-200 md:px-2 pt-4  flex flex-col overflow-y-auto ${styles.bg_img}`}>
 
             {getMessage()}
              
-            </ScrollToBottom>
+
+
+            
+           
+           
+           
+            </ScrollableFeed>
             <form className=" w-full  h-20 flex items-center justify-center px-2 md:px-2 lg:px-28">
 
                 <input onChange={(e)=>setText(e.target.value)} value={text} type="text" className=" w-full h-12 focus:outline-none rounded-full md:mr-1 lg:mr-2 px-5 text-lg bg-gray-200" placeholder="Type Your Message Here...."/>

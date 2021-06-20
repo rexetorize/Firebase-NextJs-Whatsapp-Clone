@@ -1,10 +1,11 @@
 import React from 'react'
 import styles from '../styles/Custom.module.css'
 import moment from 'moment'
-
+import ScrollToBottom from 'react-scroll-to-bottom';
 function Message({currentUser, user, message}) {
 
     return (
+        
         <div className={`
         my-2 px-2 mx-3 max-w-xs md:max-w-lg py-1 md:text-lg ${user === currentUser.email ? 'self-end' : 'self-start'}
         rounded-md text-bold
